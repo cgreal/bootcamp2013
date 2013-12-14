@@ -10,7 +10,7 @@
 		
 		
 		$.ajax({
-			  url: "http://localhost:8080/debana.web/tickets/latest",
+			  url: "http://localhost:8080/debana.web/api/tickets/latest",
 			  context: document.body
 			}).done(function(data) {
 				var ticketBundle = data.ticketBundle;
