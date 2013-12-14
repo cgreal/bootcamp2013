@@ -1,0 +1,48 @@
+<html>
+<head>
+	<script src="lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+	
+		function postData(){
+			var data = new FormData();
+			jQuery.each($('#file')[0].files, function(i, file) {
+			    data.append('file', file);
+			});
+			
+			
+			data.append('desc', $('#desc').val());
+			$.ajax({
+			    url: 'rest/note/upload',
+			    data: data,
+			    cache: false,
+			    contentType: false,
+			    processData: false,
+			    type: 'POST',
+			    success: function(data){
+			        alert(data);
+			    }
+			});
+			
+			return false;
+		}
+	
+	</script>
+</head>
+
+<body>
+	<h1>File Upload with Jersey</h1>
+ 
+	<form action="rest/note/upload" method="post" onsubmit="return postData()" enctype="multipart/form-data">
+ 
+	   <p>
+		Select a file : <input type="file" id="file" name="file" size="45" />
+	   </p>
+ 
+ 
+ 		<input type="text" value="customtextdesc" id="desc" name="desc" />
+ 
+	   <input type="submit" value="Upload It" />
+	</form>
+ 
+</body>
+</html>

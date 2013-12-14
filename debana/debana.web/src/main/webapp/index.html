@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DEBANA</title>
+<link rel='stylesheet' href='css/style.css' media='screen' />
+<script src="js/jquery.min.js"></script>
+<script src="js/blocksit.min.js"></script>
+<script>
+	$(document).ready(function() {
+		
+		
+		$.ajax({
+			  url: "http://localhost:8080/debana.web/tickets/latest",
+			  context: document.body
+			}).done(function(data) {
+				var ticketBundle = data.ticketBundle;
+				
+				var curDiv = "";
+				for(var i in  ticketBundle.ticket){
+				curDiv +="<div class='grid'><div class='imgholder'>";		
+				curDiv += "<img src='http://www.inwebson.com/demo/blocksit-js/demo2/images/img27.jpg' />";
+				curDiv += "</div>";
+				curDiv += "<strong>"+ticketBundle.ticket[i].title+"</strong>";
+				curDiv += "<p>"+ticketBundle.ticket[i].description+"</p>";
+				curDiv += "<div class='meta'>"+ticketBundle.ticket[i].user.name+"</div>";
+				curDiv += "</div>";	
+				}
+				
+			  $("#container" ).html(curDiv);
+			});
+		
+		
+		//vendor script
+		$('#header').css({
+			'top' : -50
+		}).delay(1000).animate({
+			'top' : 0
+		}, 800);
+
+		$('#footer').css({
+			'bottom' : -15
+		}).delay(1000).animate({
+			'bottom' : 0
+		}, 800);
+
+		//blocksit define
+		$(window).load(function() {
+			$('#container').BlocksIt({
+				numOfCol : 5,
+				offsetX : 8,
+				offsetY : 8
+			});
+		});
+
+		//window resize
+		var currentWidth = 1100;
+		$(window).resize(function() {
+			var winWidth = $(window).width();
+			var conWidth;
+			if (winWidth < 660) {
+				conWidth = 440;
+				col = 2
+			} else if (winWidth < 880) {
+				conWidth = 660;
+				col = 3
+			} else if (winWidth < 1100) {
+				conWidth = 880;
+				col = 4;
+			} else {
+				conWidth = 1100;
+				col = 5;
+			}
+
+			if (conWidth != currentWidth) {
+				currentWidth = conWidth;
+				$('#container').width(conWidth);
+				$('#container').BlocksIt({
+					numOfCol : col,
+					offsetX : 8,
+					offsetY : 8
+				});
+			}
+		});
+	});
+</script>
+</head>
+<body>
+
+	<!-- Header -->
+	<header id="header">
+		<h1>DEBANA | Istanbul'u Seviyorum</h1>
+		<div class="clearfix"></div>
+	</header>
+
+	<!-- Content -->
+	<section id="wrapper">
+
+		<div id="container">
+
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer">
+		<span>&copy; 2013 <a href="http://www.inwebson.com">Bootcampciler</a>.
+		</span>
+	</footer>
+
+</body>
+</html>
